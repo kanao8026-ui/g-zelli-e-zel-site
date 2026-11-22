@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d15">
+<title>Eda'ya Özel 🥀</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #100d15;
+  --wine: #55283d;
+  --rose: #d5a0b4;
+  --paper: #ead8df;
+  --muted: #bda8b5;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--paper);
+  background:
+    radial-gradient(ellipse at 50% 38%, rgba(89,39,62,.38), transparent 52%),
+    radial-gradient(ellipse at 15% 85%, rgba(51,36,62,.28), transparent 45%),
+    linear-gradient(145deg, #17111c, #09090f 75%);
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.23'/%3E%3C/svg%3E");
+  z-index: 1;
+}
+#sky, #petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+#sky { z-index: 0; }
+#petals { z-index: 5; }
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: #f6dce8;
+  opacity: .45;
+  box-shadow: 0 0 8px #e7b7ca;
+  animation: blink var(--duration) ease-in-out infinite alternate;
+}
+@keyframes blink { to { opacity: .12; transform: scale(.55); } }
+main { position: relative; z-index: 2; }
+.screen {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 44px 20px;
+  text-align: center;
+}
+.intro-inner { width: min(100%, 650px); }
+.eyebrow {
+  color: #bd879e;
+  font-family: Georgia, serif;
+  font-size: 10px;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+h1 {
+  margin: 0;
+  color: #f0dce4;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(54px, 11vw, 88px);
+  line-height: 1.1;
+  font-weight: 400;
+  text-shadow: 0 0 28px rgba(197,113,148,.2);
+}
+.intro-copy {
+  max-width: 440px;
+  margin: 15px auto 0;
+  color: #c5b0bc;
+  font-size: clamp(18px, 4vw, 21px);
+  font-style: italic;
+  line-height: 1.5;
+}
+.flower-garden {
+  min-height: 112px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: clamp(8px, 3vw, 23px);
+  margin: 17px auto 5px;
+}
+.flower {
+  display: inline-block;
+  font-size: clamp(27px, 6vw, 43px);
+  filter: drop-shadow(0 0 12px rgba(167,65,98,.3));
+  transform-origin: bottom center;
+  animation: sway 3.5s ease-in-out infinite;
+}
+.flower:nth-child(2), .flower:nth-child(5) { animation-delay: -.9s; }
+.flower:nth-child(3) { animation-delay: -1.7s; transform: translateY(-12px); }
+@keyframes sway {
+  0%,100% { transform: rotate(-7deg) translateY(0); }
+  50% { transform: rotate(7deg) translateY(-8px); }
+}
+.envelope-wrap { margin: 25px auto 0; }
+.envelope {
+  position: relative;
+  width: min(290px, 78vw);
+  height: 184px;
+  margin: 0 auto;
+  border: 1px solid #89536b;
+  border-radius: 4px;
+  background: linear-gradient(145deg, #4a2638, #211622 75%);
+  box-shadow: 0 18px 55px rgba(0,0,0,.4), 0 0 35px rgba(153,68,104,.15);
+  cursor: pointer;
+  transition: transform .35s, box-shadow .35s;
+  isolation: isolate;
+}
+.envelope:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 60px rgba(0,0,0,.45), 0 0 38px rgba(177,91,127,.25);
+}
+.envelope:focus-visible, .open-button:focus-visible {
+  outline: 2px solid #e4b4c8;
+  outline-offset: 5px;
+}
+.envelope-back {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #3b2030, #241724);
+  z-index: 0;
+}
+.envelope-front {
+  position: absolute; inset: 0;
+  background: #3a2030;
+  clip-path: polygon(0 100%, 50% 43%, 100% 100%);
+  z-index: 3;
+}
+.envelope-flap {
+  position: absolute; inset: 0;
+  background: linear-gradient(145deg, #714057, #43263a);
+  clip-path: polygon(0 0, 100% 0, 50% 61%);
+  transform-origin: top;
+  transition: transform .8s ease, z-index .1s .4s;
+  z-index: 4;
+}
+.seal {
+  position: absolute;
+  left: 50%; top: 58%;
+  transform: translate(-50%,-50%);
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  color: #f6dce6;
+  background: radial-gradient(circle at 35% 30%, #a65c77, #6d304a 70%);
+  border: 1px solid #d39aaf;
+  box-shadow: 0 2px 12px #09070b99;
+  z-index: 5;
+  font-size: 22px;
+}
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+.envelope.open .seal { opacity: 0; transition: opacity .2s; }
+.envelope-caption {
+  margin-top: 16px;
+  color: #c99aaf;
+  font-size: 15px;
+  letter-spacing: .11em;
+}
+.open-button {
+  margin-top: 24px;
+  padding: 12px 27px;
+  color: #f0d8e2;
+  background: rgba(67,35,53,.45);
+  border: 1px solid #936078;
+  border-radius: 2px;
+  font: 500 16px "Cormorant Garamond", serif;
+  letter-spacing: .12em;
+  cursor: pointer;
+  transition: .25s;
+}
+.open-button:hover { background: #512a40; border-color: #c18ba4; }
+.hint { margin-top: 13px; color: #806b7a; font-size: 13px; font-style: italic; }
+.letter-screen {
+  display: none;
+  min-height: 100svh;
+  padding: 58px 18px 40px;
+  align-items: center;
+  justify-content: center;
+}
+.letter-screen.visible { display: flex; animation: fadeUp 1.1s ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.letter {
+  position: relative;
+  width: min(100%, 610px);
+  padding: clamp(27px, 6vw, 52px);
+  border: 1px solid rgba(164,105,130,.65);
+  background:
+    radial-gradient(ellipse at top, rgba(111,57,79,.23), transparent 55%),
+    linear-gradient(150deg, rgba(38,27,40,.97), rgba(20,17,26,.98));
+  box-shadow: 0 22px 75px rgba(0,0,0,.4), 0 0 45px rgba(120,53,82,.12);
+  text-align: left;
+}
+.letter::before, .letter::after {
+  content: "✦";
+  position: absolute;
+  color: #9f6b83;
+  font-size: 18px;
+}
+.letter::before { top: 15px; left: 17px; }
+.letter::after { bottom: 15px; right: 17px; }
+.letter-flower { text-align: center; font-size: 28px; margin-bottom: 7px; }
+.letter h2 {
+  margin: 0 0 25px;
+  color: #e7b9ca;
+  text-align: center;
+  font: 400 clamp(39px, 8vw, 52px) "Great Vibes", cursive;
+}
+.letter p {
+  margin: 0 0 17px;
+  color: #e0d0d8;
+  font-size: clamp(18px, 4vw, 20px);
+  line-height: 1.72;
+}
+.letter .signoff {
+  margin-top: 28px;
+  color: #d7a1b6;
+  text-align: right;
+  font: 400 34px "Great Vibes", cursive;
+}
+.footer {
+  position: relative;
+  z-index: 2;
+  padding: 0 15px 22px;
+  color: #786574;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: .06em;
+}
+.petal {
+  position: absolute;
+  top: -35px;
+  opacity: .8;
+  animation: fall linear forwards;
+  filter: drop-shadow(0 0 5px rgba(180,85,119,.2));
+}
+@keyframes fall {
+  0% { transform: translate3d(0,-5vh,0) rotate(0deg); opacity: 0; }
+  10% { opacity: .8; }
+  100% { transform: translate3d(var(--drift),110vh,0) rotate(540deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<div id="sky" aria-hidden="true"></div>
+<div id="petals" aria-hidden="true"></div>
+
+<main>
+  <section class="screen" id="intro">
+    <div class="intro-inner">
+      <div class="eyebrow">✦ sadece eda için ✦</div>
+      <h1>Günaydın, Eda...</h1>
+      <p class="intro-copy">Senin için küçük bir şey hazırladım.<br>Umarım yüzünde minicik de olsa bir gülümseme bırakır.</p>
+
+      <div class="flower-garden" aria-hidden="true">
+        <span class="flower">🥀</span>
+        <span class="flower">🌹</span>
+        <span class="flower">🦋</span>
+        <span class="flower">🌹</span>
+        <span class="flower">🥀</span>
+      </div>
+
+      <div class="envelope-wrap">
+        <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Eda'nın mektubunu aç">
+          <div class="envelope-back"></div>
+          <div class="envelope-flap"></div>
+          <div class="envelope-front"></div>
+          <div class="seal">♡</div>
+        </div>
+        <div class="envelope-caption">Eda'ya küçük bir mektup</div>
+        <button class="open-button" id="openButton" type="button">Zarfı aç ♡</button>
+        <div class="hint">Acele etme, bu senin için. 🥀</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="letter-screen" id="letterScreen">
+    <article class="letter">
+      <div class="letter-flower" aria-hidden="true">🥀</div>
+      <h2>Günaydın, güzelim...</h2>
+
+      <p>Günaydın Edaaa. ♡</p>
+
+      <p>Umarım güzel bir uyku uyumuşsundur ve bugün de güzel bir güne uyanmışsındır. Sana böyle küçük bir sürpriz hazırlamak istedim, umarım hoşuna gider.</p>
+
+      <p>Öncelikle saçlarından bahsetmek istiyorum çünkü açık hâllerine gerçekten bayılıyorum. Sana çok yakışıyorlar. Bir de kokun var tabii, onu da söylemeden geçemeyeceğim. Gerçekten çok güzel kokuyorsun. Gözlüğün de ayrı bir güzel duruyor sende, nedense özellikle çok hoşuma gidiyor. Makyajsız hâlin için de ayrı bir şey söylemek istiyorum. Bence makyaj yapmadığın zaman da inanılmaz güzelsin, hatta olduğun hâlinle seni görmek çok hoşuma gidiyor.</p>
+
+      <p>Bu arada bugün seni görmek güzeldi. İkizin ve arkadaşın da yanımızda olduğu için pek baş başa kalamadık ama olsun, seni görmek bile güzeldi. Yine de bir sonraki görüşmemizde biraz daha uzun vakit geçirebilmeyi çok istiyorum. Seninle baş başa oturup konuşmayı, seni daha yakından tanımayı ve birlikte güzel vakit geçirmeyi gerçekten sabırsızlıkla bekliyorum.</p>
+
+      <p>Bir de bugün el ele tutuşmaya çalışmamız geldi aklıma... Belki küçücük bir şeydi ama benim için tatlı bir andı. Açıkçası bir dahaki sefere böyle yarım kalmasın istiyorum. Seninle el ele yürüyebileceğimiz, rahatça vakit geçirebileceğimiz günü şimdiden bekliyorum. ♡</p>
+
+      <p>Seninle konuşmak da ayrı güzel bu arada. Bazen ne kadar küçük şeyler olsa bile aklımda kalıyorsun. Bunu sana her zaman söylemiyor olabilirim ama seni düşündüğümden daha fazla önemsiyorum galiba.</p>
+
+      <p>Neyse, daha fazla uzatıp seni de sıkmayayım. Umarım bugün bol bol gülersin, canını sıkan hiçbir şey olmaz. Kendine dikkat et olur mu?</p>
+
+      <p>Keşke şu an yanında olabilsem de bunları mesaj yerine kendim söyleyebilsem.</p>
+
+      <p>Günaydın tekrardan, güzelim. Umarım günün çok güzel geçer. Seni öpüyorum. ♡</p>
+
+      <div class="signoff">Sana kocaman bir günaydın...</div>
+    </article>
+  </section>
+</main>
+
+<div class="footer">senin için, küçük bir sevgiyle ♡</div>
+
+<script>
+const sky = document.getElementById("sky");
+const petals = document.getElementById("petals");
+const envelope = document.getElementById("envelope");
+const openButton = document.getElementById("openButton");
+const intro = document.getElementById("intro");
+const letterScreen = document.getElementById("letterScreen");
+
+for (let i = 0; i < 65; i++) {
+  const star = document.createElement("span");
+  star.className = "star";
+  star.style.left = Math.random() * 100 + "%";
+  star.style.top = Math.random() * 100 + "%";
+  star.style.setProperty("--duration", (2 + Math.random() * 5) + "s");
+  sky.appendChild(star);
+}
+
+const petalSymbols = ["✿", "❀", "🌸", "♡", "🥀"];
+function createPetal() {
+  const petal = document.createElement("span");
+  petal.className = "petal";
+  petal.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.fontSize = (12 + Math.random() * 13) + "px";
+  petal.style.setProperty("--drift", (Math.random() * 150 - 75) + "px");
+  petal.style.animationDuration = (8 + Math.random() * 8) + "s";
+  petals.appendChild(petal);
+  setTimeout(() => petal.remove(), 17000);
+}
+setInterval(createPetal, 1100);
+
+let opened = false;
+function openLetter() {
+  if (opened) return;
+  opened = true;
+  envelope.classList.add("open");
+  openButton.disabled = true;
+  openButton.textContent = "Senin için... ♡";
+
+  setTimeout(() => {
+    intro.style.display = "none";
+    letterScreen.classList.add("visible");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 950);
+}
+openButton.addEventListener("click", openLetter);
+envelope.addEventListener("click", openLetter);
+envelope.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openLetter();
+  }
+});
+</script>
+</body>
+</html>
